@@ -6,7 +6,6 @@ import Fastify, {
   FastifyReply,
 } from "fastify";
 import fastifyJwt from "@fastify/jwt";
-
 import userRoutes from "./routes/user";
 import { userSchemas } from "./schemas/user";
 
