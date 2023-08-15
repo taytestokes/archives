@@ -7,7 +7,7 @@
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node dist/app.js",
     "preserve": "npm run build",
-    "serve": "concurrently \"tsc -w\" \"nodemon dist/app.js\""
+    "serve": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon dist/app.js\""
   },
   "author": "Tayte Stokes",
   "license": "ISC",
