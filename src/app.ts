@@ -1,12 +1,31 @@
-import Fastify from "fastify";
+import "dotenv/config";
+import config from "config";
+import Fastify, {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
+import fastifyJwt from "@fastify/jwt";
 
-import userRoutes from "./modules/user/user.route";
+import userRoutes from "./routes/user";
+import { userSchemas } from "./schemas/user";
 
-import { userSchemas } from "./modules/user/user.schema";
-
-const server = Fastify();
+export const server: FastifyInstance = Fastify();
 
 // Plugins
+server.register(fastifyJwt, {
+  secret: config.get("secret"),
+});
+
+// Decorators
+server.decorate(
+  "authenticate",
+  async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify();
+    } catch (error) {}
+  }
+);
 
 // Endpoints
 server.get("/health", async function () {
@@ -23,7 +42,7 @@ async function main() {
   server.register(userRoutes, { prefix: "api/users" });
 
   try {
-    server.listen(3000, "0.0.0.0");
+    server.listen({ port: 3000 });
     console.log("Server ready!");
   } catch (error) {
     console.error(error);
