@@ -5,6 +5,7 @@ import Fastify, {
   FastifyRequest,
   FastifyReply,
 } from "fastify";
+import fastifyCors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import userRoutes from "./routes/user";
 import { userSchemas } from "./schemas/user";
@@ -12,6 +13,15 @@ import { userSchemas } from "./schemas/user";
 export const server: FastifyInstance = Fastify();
 
 // Plugins
+server.register(fastifyCors, {
+  origin: [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:5555",
+  ],
+  methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
+});
+
 server.register(fastifyJwt, {
   secret: config.get("secret"),
 });
@@ -41,8 +51,8 @@ async function main() {
   server.register(userRoutes, { prefix: "api/users" });
 
   try {
-    server.listen({ port: 3000 });
-    console.log("Server ready!");
+    server.listen({ port: config.get("port") });
+    console.log(`Server ready on port: ${config.get("port")}!`);
   } catch (error) {
     console.error(error);
     process.exit(1);
