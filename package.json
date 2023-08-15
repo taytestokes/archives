@@ -7,7 +7,8 @@
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node dist/app.js",
     "preserve": "npm run build",
-    "serve": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon dist/app.js\""
+    "serve": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon dist/app.js\"",
+    "db:migrate": "prisma migrate deploy"
   },
   "author": "Tayte Stokes",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "@types/node": "^20.5.0",
     "concurrently": "^8.2.0",
     "nodemon": "^3.0.1",
+    "prisma": "^5.1.1",
     "typescript": "^5.1.6"
   }
 }
