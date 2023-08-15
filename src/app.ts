@@ -5,7 +5,6 @@ import Fastify, {
   FastifyRequest,
   FastifyReply,
 } from "fastify";
-import fastifyCors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import userRoutes from "./routes/user";
 import { userSchemas } from "./schemas/user";
@@ -13,15 +12,6 @@ import { userSchemas } from "./schemas/user";
 export const server: FastifyInstance = Fastify();
 
 // Plugins
-server.register(fastifyCors, {
-  origin: [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080",
-    "http://127.0.0.1:5555",
-  ],
-  methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
-});
-
 server.register(fastifyJwt, {
   secret: config.get("secret"),
 });
@@ -39,6 +29,10 @@ server.decorate(
 // Endpoints
 server.get("/health", async function () {
   return { status: "OK", code: 200 };
+});
+
+server.get("/", async function (_, reply) {
+  return reply.status(200).send({ message: "Hello world!" });
 });
 
 async function main() {
