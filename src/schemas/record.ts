@@ -6,9 +6,8 @@ import { buildJsonSchemas } from "fastify-zod";
  */
 const createRecordRequestSchema = z.object({
   url: z.string(),
-  title: z.string().optional(),
+  title: z.string(),
   description: z.string().optional(),
-  userId: z.string(),
 });
 
 /**

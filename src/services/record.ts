@@ -4,8 +4,15 @@ import { CreateRecordRequest } from "../schemas/record";
 /**
  * Creates a new record for a user.
  */
-export async function createRecord(data: CreateRecordRequest) {
+export async function createRecord(
+  data: CreateRecordRequest & { userId: string }
+) {
   return prisma.record.create({
-    data,
+    data: {
+      url: data.url,
+      userId: data.userId,
+      title: data.title,
+      description: data.description,
+    },
   });
 }

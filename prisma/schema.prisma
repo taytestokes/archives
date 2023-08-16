@@ -19,7 +19,7 @@ model User {
 model Record {
   id          String   @id @default(uuid())
   url         String   @unique
-  title       String?
+  title       String
   description String?
   user        User     @relation(fields: [userId], references: [id])
   userId      String
