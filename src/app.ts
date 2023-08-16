@@ -49,8 +49,6 @@ for (const schema of userSchemas) {
   server.addSchema(schema);
 }
 
-console.log(config.get("secret"));
-
 server.listen({ port: config.get("port") || 8080 }, (error) => {
   if (error) {
     console.error(error);
