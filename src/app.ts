@@ -40,23 +40,22 @@ server.register(userRoutes, { prefix: "api/v1/users" });
 server.register(recordRoutes, { prefix: "api/v1/records" });
 
 // TODO: Rmove this soon
-server.get("/", async function (_, reply) {
-  return reply.status(200).send({ message: "Hello world!" });
+server.get("/", async (request, reply) => {
+  reply.code(200).send({ message: "Hello world!" });
 });
 
-async function main() {
-  // Schemas
-  for (const schema of userSchemas) {
-    server.addSchema(schema);
-  }
+// Schemas
+for (const schema of userSchemas) {
+  server.addSchema(schema);
+}
 
-  try {
-    server.listen({ port: config.get("port"), host: "0.0.0.0" });
-    console.log(`Server ready on port: ${config.get("port")}!`);
-  } catch (error) {
+console.log(config.get("secret"));
+
+server.listen({ port: config.get("port") || 8080 }, (error) => {
+  if (error) {
     console.error(error);
     process.exit(1);
   }
-}
 
-main();
+  console.log(`Server ready on port: ${config.get("port")}!`);
+});
