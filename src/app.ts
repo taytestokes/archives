@@ -51,7 +51,7 @@ async function main() {
   }
 
   try {
-    server.listen({ port: config.get("port") });
+    server.listen({ port: config.get("port"), host: "0.0.0.0" });
     console.log(`Server ready on port: ${config.get("port")}!`);
   } catch (error) {
     console.error(error);
