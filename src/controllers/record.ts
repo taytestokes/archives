@@ -13,11 +13,13 @@ export async function createRecordHandler(
   reply: FastifyReply
 ) {
   try {
+    const { url, title, description } = request.body;
+
     const record = await createRecord({
-      url: request.body.url,
+      url,
+      title,
+      description,
       userId: request.user.id,
-      title: request.body.title,
-      description: request.body.description,
     });
 
     return reply.status(200).send(record);

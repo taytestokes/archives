@@ -4,9 +4,6 @@ import { server } from "../app";
 import { findUserByEmail, registerUser } from "../services/user";
 import { RegisterUserRequest, LoginUserRequest } from "../schemas/user";
 
-/**
- * Handles request to register a new user into the platform
- */
 export async function registerUserHandler(
   request: FastifyRequest<{
     Body: RegisterUserRequest;
@@ -24,10 +21,6 @@ export async function registerUserHandler(
   }
 }
 
-/**
- * Handles loggin a user into the platform by generating an
- * access token and returning it to the requester
- */
 export async function loginUserHandler(
   request: FastifyRequest<{
     Body: LoginUserRequest;
