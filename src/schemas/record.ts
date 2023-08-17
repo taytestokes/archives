@@ -17,10 +17,15 @@ const createRecordResponseSchema = z.object({
   updatedAt: z.string(),
 });
 
-export const { schemas: recordSchema, $ref } = buildJsonSchemas({
-  createRecordRequestSchema,
-  createRecordResponseSchema,
-});
+export const { schemas: recordSchemas, $ref } = buildJsonSchemas(
+  {
+    createRecordRequestSchema,
+    createRecordResponseSchema,
+  },
+  {
+    $id: "RecordSchemas",
+  }
+);
 
 export type CreateRecordRequest = z.infer<typeof createRecordRequestSchema>;
 export type CreateRecoredResponse = z.infer<typeof createRecordResponseSchema>;

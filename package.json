@@ -2,12 +2,12 @@
   "name": "archives",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json",
-    "start": "node dist/app.js",
+    "start": "node dist/index.js",
     "preserve": "npm run build",
-    "serve": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon dist/app.js\"",
+    "serve": "concurrently \"tsc -w -p tsconfig.json\" \"nodemon dist/index.js\"",
     "db:migrate:dev": "prisma migrate dev --preview-feature",
     "db:migrate:deploy": "prisma migrate deploy --preview-feature",
     "db:generate": "prisma generate"

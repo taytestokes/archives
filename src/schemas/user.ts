@@ -36,12 +36,17 @@ const loginUserResponseSchema = z.object({
   accessToken: z.string(),
 });
 
-export const { schemas: userSchemas, $ref } = buildJsonSchemas({
-  registerUserRequestSchema,
-  registerUserResponseSchema,
-  loginUserRequestSchema,
-  loginUserResponseSchema,
-});
+export const { schemas: userSchemas, $ref } = buildJsonSchemas(
+  {
+    registerUserRequestSchema,
+    registerUserResponseSchema,
+    loginUserRequestSchema,
+    loginUserResponseSchema,
+  },
+  {
+    $id: "UserSchemas",
+  }
+);
 
 export type RegisterUserRequest = z.infer<typeof registerUserRequestSchema>;
 export type RegisterUserResponse = z.infer<typeof registerUserResponseSchema>;

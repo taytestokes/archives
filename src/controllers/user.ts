@@ -1,6 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import bcrypt from "bcrypt";
-import { server } from "../app";
 import { findUserByEmail, registerUser } from "../services/user";
 import { RegisterUserRequest, LoginUserRequest } from "../schemas/user";
 
@@ -41,7 +40,7 @@ export async function loginUserHandler(
     }
 
     return reply.status(200).send({
-      accessToken: server.jwt.sign({
+      accessToken: request.jwt.sign({
         id: user.id,
         email: user.email,
       }),
