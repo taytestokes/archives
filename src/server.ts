@@ -1,11 +1,9 @@
-import config from "config";
-
 import Fastify, {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
 } from "fastify";
-import fastifyJwt from "@fastify/jwt";
+import fastifyJwt, { JWT } from "@fastify/jwt";
 
 import { healthRoutes } from "./routes/v1/health";
 import { userRoutes } from "./routes/v1/user";
@@ -13,6 +11,25 @@ import { recordRoutes } from "./routes/v1/record";
 
 import { userSchemas } from "./schemas/user";
 import { recordSchemas } from "./schemas/record";
+
+declare module "@fastify/jwt" {
+  export interface FastifyJWT {
+    user: {
+      id: string;
+      email: string;
+    };
+  }
+}
+
+declare module "fastify" {
+  interface FastifyRequest {
+    jwt: JWT;
+  }
+
+  export interface FastifyInstance {
+    authenticate: any;
+  }
+}
 
 function buildServer() {
   const schemas = [...userSchemas, ...recordSchemas];
@@ -22,7 +39,7 @@ function buildServer() {
 
   // Plugins
   server.register(fastifyJwt, {
-    secret: config.get("secret"),
+    secret: process.env.SECRET || "",
   });
 
   // Decorators
@@ -38,7 +55,7 @@ function buildServer() {
   );
 
   // Hooks
-  server.addHook("preHandler", (request, _, next) => {
+  server.addHook("preHandler", (request, reply, next) => {
     request.jwt = server.jwt;
     return next();
   });
