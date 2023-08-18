@@ -146,3 +146,37 @@ test("/api/v1/users/login", async () => {
     t.equal(response.json().message, "Error authenticating user.");
   });
 });
+
+test("api/v1/records", async () => {
+  test("Successfully create a record for a user", async (t) => {
+    const email = faker.internet.email();
+    const password = faker.internet.email();
+
+    const server = buildServer();
+
+    t.teardown(async () => {
+      server.close();
+      await prisma.user.deleteMany({});
+    });
+
+    await server.inject({
+      method: "POST",
+      url: "/api/v1/users/register",
+      payload: {
+        email,
+        password,
+      },
+    });
+
+    const response = await server.inject({
+      method: "POST",
+      url: "/api/v1/users/login",
+      payload: {
+        email,
+        password,
+      },
+    });
+
+    console.log(response);
+  });
+});

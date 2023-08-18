@@ -32,8 +32,14 @@ declare module "fastify" {
 }
 
 function buildServer() {
-  // Server Instance
-  const server: FastifyInstance = Fastify();
+  const server: FastifyInstance = Fastify({
+    logger: {
+      level: "info",
+      transport: {
+        target: "pino-pretty",
+      },
+    },
+  });
 
   // Plugins
   server.register(fastifyJwt, {
