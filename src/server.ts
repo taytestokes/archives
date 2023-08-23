@@ -4,6 +4,7 @@ import Fastify, {
   FastifyReply,
 } from "fastify";
 import fastifyJwt, { JWT } from "@fastify/jwt";
+import fastifyCors from "@fastify/cors";
 
 import { healthRoutes } from "./routes/v1/health";
 import { userRoutes } from "./routes/v1/user";
@@ -44,6 +45,11 @@ function buildServer() {
   // Plugins
   server.register(fastifyJwt, {
     secret: process.env.SECRET || "",
+  });
+
+  server.register(fastifyCors, {
+    origin: "*",
+    methods: ["GET", "POST"],
   });
 
   // Decorators
