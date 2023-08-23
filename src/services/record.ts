@@ -16,3 +16,12 @@ export async function createRecord(
     },
   });
 }
+
+export async function getRecordByUrl(url: string, userId: string) {
+  return prisma.record.findUnique({
+    where: {
+      url,
+      userId,
+    },
+  });
+}
