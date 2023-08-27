@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createRecord, getRecordByUrl } from "../services/record";
+import {
+  createRecord,
+  getRecordByUrl,
+  getUserRecords,
+} from "../services/record";
 import { CreateRecordRequest, GetRecordByUrlRequest } from "src/schemas/record";
 
-/**
- * Handles creating a new archive record from the request
- * data for a user.
- */
 export async function createRecordHandler(
   request: FastifyRequest<{
     Body: CreateRecordRequest;
@@ -46,5 +46,20 @@ export async function getRecordByUrlHandler(
     return reply.status(200).send(record);
   } catch (error) {
     return reply.status(500).send({ message: "Error fetching record." });
+  }
+}
+
+export async function getUserRecordsHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.user;
+
+    const records = await getUserRecords(id);
+
+    reply.status(200).send(records);
+  } catch (error) {
+    return reply.status(500).send({ message: "Error fetching user records." });
   }
 }

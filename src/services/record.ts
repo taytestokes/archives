@@ -25,3 +25,11 @@ export async function getRecordByUrl(url: string, userId: string) {
     },
   });
 }
+
+export async function getUserRecords(userId: string) {
+  return prisma.record.findMany({
+    where: {
+      userId,
+    },
+  });
+}

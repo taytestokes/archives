@@ -31,12 +31,15 @@ const getRecordByUrlResponseSchema = z.object({
   updatedAt: z.string(),
 });
 
+const getUserRecordsResponseSchema = z.array(getRecordByUrlResponseSchema);
+
 export const { schemas: recordSchemas, $ref } = buildJsonSchemas(
   {
     createRecordRequestSchema,
     createRecordResponseSchema,
     getRecordByUrlRequestSchema,
     getRecordByUrlResponseSchema,
+    getUserRecordsResponseSchema,
   },
   {
     $id: "RecordSchemas",
@@ -48,4 +51,7 @@ export type CreateRecoredResponse = z.infer<typeof createRecordResponseSchema>;
 export type GetRecordByUrlRequest = z.infer<typeof getRecordByUrlRequestSchema>;
 export type GetRecordByUrlResponse = z.infer<
   typeof getRecordByUrlResponseSchema
+>;
+export type GetUserRecordsResponse = z.infer<
+  typeof getUserRecordsResponseSchema
 >;
