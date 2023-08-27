@@ -49,7 +49,7 @@ function buildServer() {
 
   server.register(fastifyCors, {
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: "GET,PUT,POST,DELETE,OPTIONS",
   });
 
   // Decorators
